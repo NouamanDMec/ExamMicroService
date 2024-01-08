@@ -1,5 +1,4 @@
 package com.example.coursexam;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,24 +11,24 @@ public class CoursService {
     private final CoursRepository repository;
     private final StudentClient client;
 
-    public void saveSchool(Cours cours) {
+    public void saveCours(Cours cours) {
         repository.save(cours);
     }
 
-    public List<Cours> findAllSchools() {
+    public List<Cours> findAllCours() {
         return repository.findAll();
     }
 
-    public FullCoursResponse findSchoolsWithStudents(Integer schoolId) {
-        var school = repository.findById(schoolId)
+    public FullCoursResponse findCoursWithStudents(Integer coursId) {
+        var cours = repository.findById(coursId)
                 .orElse(
                         Cours.builder()
                                 .name("NOT_FOUND")
                                 .build()
                 );
-        var students = client.findAllStudentsBySchool(schoolId);
+        var students = client.findAllStudentsByCours(coursId);
         return FullCoursResponse.builder()
-                .name(school.getName())
+                .name(cours.getName())
                 .students(students)
                 .build();
     }
